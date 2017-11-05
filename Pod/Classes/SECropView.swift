@@ -8,13 +8,13 @@
 
 import UIKit
 
-class SECropView: UIView {
+public class SECropView: UIView {
     static let goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     static let badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
 
-    var areaQuadrangle = AreaView()
+    var areaQuadrangle = SEAreaView()
     
-    fileprivate var corners = Array<CornerView>()
+    fileprivate var corners = Array<SECornerView>()
     fileprivate var cornerOnTouch = -1
     
     override init(frame: CGRect) {
@@ -22,17 +22,17 @@ class SECropView: UIView {
         backgroundColor = UIColor.clear
     }
     
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
     public func configureWithCorners(corners : Array<CGPoint>) {
         
         for point in corners {
-            let cornerToAdd = CornerView(frame: CGRect(x: point.x + CornerView.cornerSize / 2.0,
-                                                       y: point.y + CornerView.cornerSize / 2.0,
-                                                       width: CornerView.cornerSize,
-                                                       height: CornerView.cornerSize))
+            let cornerToAdd = SECornerView(frame: CGRect(x: point.x + SECornerView.cornerSize / 2.0,
+                                                         y: point.y + SECornerView.cornerSize / 2.0,
+                                                         width: SECornerView.cornerSize,
+                                                         height: SECornerView.cornerSize))
             addSubview(cornerToAdd)
             self.corners.append(cornerToAdd)
         }
@@ -68,7 +68,7 @@ class SECropView: UIView {
         }
     }
 
-    override func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
         guard touches.count == 1 && corners.count > 2 else {
@@ -91,7 +91,7 @@ class SECropView: UIView {
         update(scale: +1)
     }
     
-    override func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
         
         guard cornerOnTouch != -1 && touches.count == 1 else {
@@ -108,7 +108,7 @@ class SECropView: UIView {
         update(scale: 0)
     }
     
-    override func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
+    override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesEnded(touches, with: event)
         
         guard cornerOnTouch != -1 && touches.count == 1 else {

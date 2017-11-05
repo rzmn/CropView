@@ -7,6 +7,6 @@ Pod::Spec.new do |s|
   s.license      = "MIT"
   s.author       = { "nikitarazumnuy" => "agerfirelol@gmail.com" }
   s.source       = { :git => "https://github.com/rzmn/CropView.git"}
-  s.source_files = "Classes/*.swift"
+  s.source_files = "Pod/Classes/*.swift"
 
 end
