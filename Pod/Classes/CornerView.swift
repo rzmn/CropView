@@ -1,0 +1,65 @@
+//
+//  CornerView.swift
+//  CropViewController
+//
+//  Created by Никита Разумный on 11/5/17.
+//  Copyright © 2017 resquare. All rights reserved.
+//
+
+import UIKit
+
+class CornerView: UIView {
+
+    static let cornerSize : CGFloat = 25.0
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        layer.cornerRadius = frame.size.width / 2.0
+        layer.borderWidth = 1.0
+        layer.masksToBounds = true
+        backgroundColor = UIColor.clear
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        let position = superview!.convert(self.frame, to: nil)
+        let touchPoint = position.origin
+
+        print(position.size)
+        let context = UIGraphicsGetCurrentContext()!
+        
+        context.translateBy(x: -(position.size.width / 2 - CornerView.cornerSize / 2),
+                            y: -(position.size.width / 2 - CornerView.cornerSize / 2))
+
+        context.translateBy(x: -touchPoint.x,
+                            y: -touchPoint.y)
+
+        isHidden = true
+        (superview as! CropView).areaQuadrangle.isHidden = true
+        self.superview?.superview?.superview?.layer.render(in: context)
+        (superview as! CropView).areaQuadrangle.isHidden = false
+        isHidden = false
+    }
+    
+    func scaleUp() {
+        UIView.animate(withDuration: 0.15, animations: {
+            self.layer.borderWidth = 0.5
+            self.transform = CGAffineTransform.identity.scaledBy(x: 2, y: 2)
+        }) { (_) in
+            self.setNeedsDisplay()
+        }
+    }
+    
+    func scaleDown() {
+        UIView.animate(withDuration: 0.15, animations: {
+            self.layer.borderWidth = 1
+            self.transform = CGAffineTransform.identity
+        }) { (_) in
+            self.setNeedsDisplay()
+        }
+    }
+}
