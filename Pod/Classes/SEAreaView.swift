@@ -8,7 +8,7 @@
 
 import UIKit
 
-class AreaView: UIView {
+class SEAreaView: UIView {
 
     var path = CGMutablePath()
     var isPathValid = true
@@ -25,7 +25,7 @@ class AreaView: UIView {
         context?.setLineCap(.round)
         context?.setLineJoin(.round)
 
-        context?.setStrokeColor((isPathValid ? CropView.goodAreaColor : CropView.badAreaColor).cgColor)
+        context?.setStrokeColor((isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor).cgColor)
 
         context?.strokePath()
     }

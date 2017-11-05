@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CornerView: UIView {
+class SECornerView: UIView {
 
     static let cornerSize : CGFloat = 25.0
     
@@ -32,16 +32,16 @@ class CornerView: UIView {
         print(position.size)
         let context = UIGraphicsGetCurrentContext()!
         
-        context.translateBy(x: -(position.size.width / 2 - CornerView.cornerSize / 2),
-                            y: -(position.size.width / 2 - CornerView.cornerSize / 2))
+        context.translateBy(x: -(position.size.width / 2 - SECornerView.cornerSize / 2),
+                            y: -(position.size.width / 2 - SECornerView.cornerSize / 2))
 
         context.translateBy(x: -touchPoint.x,
                             y: -touchPoint.y)
 
         isHidden = true
-        (superview as! CropView).areaQuadrangle.isHidden = true
+        (superview as! SECropView).areaQuadrangle.isHidden = true
         self.superview?.superview?.superview?.layer.render(in: context)
-        (superview as! CropView).areaQuadrangle.isHidden = false
+        (superview as! SECropView).areaQuadrangle.isHidden = false
         isHidden = false
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CropView: UIView {
+class SECropView: UIView {
     static let goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     static let badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
 
@@ -42,7 +42,7 @@ class CropView: UIView {
         areaQuadrangle.isPathValid = checkConvex()
         addSubview(areaQuadrangle)
         for corner in self.corners {
-            corner.layer.borderColor = (areaQuadrangle.isPathValid ? CropView.goodAreaColor : CropView.badAreaColor ).cgColor
+            corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
         }
     }
     
@@ -64,7 +64,7 @@ class CropView: UIView {
         areaQuadrangle.isPathValid = checkConvex()
         areaQuadrangle.setNeedsDisplay()
         for corner in corners {
-            corner.layer.borderColor = (areaQuadrangle.isPathValid ? CropView.goodAreaColor : CropView.badAreaColor ).cgColor
+            corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
         }
     }
 
