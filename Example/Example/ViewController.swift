@@ -16,7 +16,7 @@ class ViewController: UIViewController {
         let view = UIImageView()
         view.contentMode = .scaleAspectFit
         view.isUserInteractionEnabled = true
-        view.image = #imageLiteral(resourceName: "note.jpg")
+        view.image = #imageLiteral(resourceName: "paper.jpg")
         return view
     }()
     
@@ -30,10 +30,10 @@ class ViewController: UIViewController {
         
         imageView.frame = view.frame
         cropView.frame = view.frame
-        cropView.configureWithCorners(corners: [CGPoint(x: 10, y: 10),
-                                                CGPoint(x: 10, y: 100),
-                                                CGPoint(x: 150, y: 150),
-                                                CGPoint(x: 100, y: 10)])
+        cropView.configureWithCorners(corners: [CGPoint(x: 100, y: 120),
+                                                CGPoint(x: 270, y: 170),
+                                                CGPoint(x: 280, y: 450),
+                                                CGPoint(x: 120, y: 400)])
         view.addSubview(imageView)
         imageView.addSubview(cropView)
     }

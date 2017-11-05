@@ -12,6 +12,7 @@
 		841AFB331FAFC48F00601D76 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 841AFB311FAFC48F00601D76 /* Main.storyboard */; };
 		841AFB351FAFC48F00601D76 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 841AFB341FAFC48F00601D76 /* Assets.xcassets */; };
 		841AFB381FAFC48F00601D76 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 841AFB361FAFC48F00601D76 /* LaunchScreen.storyboard */; };
+		841AFB411FAFCE6300601D76 /* paper.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 841AFB401FAFCE6300601D76 /* paper.jpg */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -22,6 +23,7 @@
 		841AFB341FAFC48F00601D76 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		841AFB371FAFC48F00601D76 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		841AFB391FAFC48F00601D76 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		841AFB401FAFCE6300601D76 /* paper.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = paper.jpg; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -54,6 +56,7 @@
 		841AFB2C1FAFC48F00601D76 /* Example */ = {
 			isa = PBXGroup;
 			children = (
+				841AFB3F1FAFCE4B00601D76 /* Resources */,
 				841AFB2D1FAFC48F00601D76 /* AppDelegate.swift */,
 				841AFB2F1FAFC48F00601D76 /* ViewController.swift */,
 				841AFB311FAFC48F00601D76 /* Main.storyboard */,
@@ -62,6 +65,14 @@
 				841AFB391FAFC48F00601D76 /* Info.plist */,
 			);
 			path = Example;
+			sourceTree = "<group>";
+		};
+		841AFB3F1FAFCE4B00601D76 /* Resources */ = {
+			isa = PBXGroup;
+			children = (
+				841AFB401FAFCE6300601D76 /* paper.jpg */,
+			);
+			path = Resources;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -123,6 +134,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				841AFB411FAFCE6300601D76 /* paper.jpg in Resources */,
 				841AFB381FAFC48F00601D76 /* LaunchScreen.storyboard in Resources */,
 				841AFB351FAFC48F00601D76 /* Assets.xcassets in Resources */,
 				841AFB331FAFC48F00601D76 /* Main.storyboard in Resources */,
