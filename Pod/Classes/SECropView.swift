@@ -28,6 +28,10 @@ public class SECropView: UIView {
     
     public func configureWithCorners(corners : Array<CGPoint>) {
         
+        for subview in subviews {
+            subview.removeFromSuperview()
+        }
+        
         for point in corners {
             let cornerToAdd = SECornerView(frame: CGRect(x: point.x + SECornerView.cornerSize / 2.0,
                                                          y: point.y + SECornerView.cornerSize / 2.0,

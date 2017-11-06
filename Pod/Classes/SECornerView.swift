@@ -37,6 +37,18 @@ class SECornerView: UIView {
 
         context.translateBy(x: -touchPoint.x,
                             y: -touchPoint.y)
+        
+        if let nav = UIApplication.shared.keyWindow?.rootViewController as? UINavigationController {
+            if !nav.navigationBar.isHidden {
+                print("offset to: ", nav.navigationBar.intrinsicContentSize.height)
+                context.translateBy(x: 0,
+                                    y: nav.navigationBar.intrinsicContentSize.height)
+            }
+        }
+        if !UIApplication.shared.isStatusBarHidden {
+            context.translateBy(x: 0,
+                                y: 22)
+        }
 
         isHidden = true
         (superview as! SECropView).areaQuadrangle.isHidden = true
