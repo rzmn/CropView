@@ -24,10 +24,19 @@ class SEAreaView: UIView {
         context?.setLineWidth(1)
         context?.setLineCap(.round)
         context?.setLineJoin(.round)
-
+        
+        
         context?.setStrokeColor((isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor).cgColor)
-
         context?.strokePath()
+        
+        context?.saveGState()
+        context?.addRect(bounds)
+        context?.addPath(path)
+        
+        context?.setFillColor(UIColor(white: 0.3, alpha: 0.2).cgColor)
+        context?.drawPath(using: .eoFill)
+        
+        context?.restoreGState()
     }
 
 }
