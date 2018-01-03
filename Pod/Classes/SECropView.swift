@@ -16,6 +16,14 @@ public class SECropView: UIView {
     
     fileprivate var corners = Array<SECornerView>()
     fileprivate var cornerOnTouch = -1
+
+	var isPathvalid: Bool {
+		return areaQuadrangle.isPathValid
+	}
+
+	public var cornerLocations: [CGPoint] {
+		return corners.flatMap { $0.center }
+	}
     
     override init(frame: CGRect) {
         super.init(frame: frame)

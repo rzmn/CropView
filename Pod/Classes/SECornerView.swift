@@ -29,7 +29,6 @@ class SECornerView: UIView {
         let position = superview!.convert(self.frame, to: nil)
         let touchPoint = position.origin
 
-        print(position.size)
         let context = UIGraphicsGetCurrentContext()!
         
         context.translateBy(x: -(position.size.width / 2 - SECornerView.cornerSize / 2),
