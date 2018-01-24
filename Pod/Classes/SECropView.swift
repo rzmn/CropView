@@ -40,7 +40,9 @@ public class SECropView: UIView {
         
         self.corners = []
         for subview in subviews {
-            subview.removeFromSuperview()
+            if subview is SECornerView {
+                subview.removeFromSuperview()
+            }
         }
         
         for point in corners {
@@ -51,7 +53,7 @@ public class SECropView: UIView {
             addSubview(cornerToAdd)
             self.corners.append(cornerToAdd)
         }
-        areaQuadrangle.frame = frame
+        areaQuadrangle.frame = bounds
         areaQuadrangle.backgroundColor = .clear
         areaQuadrangle.path = getPath()
         areaQuadrangle.isPathValid = checkConvex()
@@ -135,10 +137,17 @@ public class SECropView: UIView {
     
     fileprivate func getPath() -> CGMutablePath {
         let path = CGMutablePath()
-        path.move(to: (corners.first?.center)!)
+        
+        guard let firstPt = corners.first else { return CGMutablePath() }
+        
+        let initPt = CGPoint(x: firstPt.center.x - areaQuadrangle.frame.origin.x,
+                             y: firstPt.center.y - areaQuadrangle.frame.origin.y)
+        path.move(to: initPt)
         
         for i in 0 ..< corners.count - 1 {
-            path.addLine(to: corners[(i + 1) % corners.count].center)
+            let pt = CGPoint(x: corners[(i + 1) % corners.count].center.x - areaQuadrangle.frame.origin.x,
+                             y: corners[(i + 1) % corners.count].center.y - areaQuadrangle.frame.origin.y)
+            path.addLine(to: pt)
             
         }
         path.closeSubpath()
