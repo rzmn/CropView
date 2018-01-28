@@ -8,6 +8,12 @@
 
 import UIKit
 
+extension CGPoint {
+    func normalized(size: CGSize) -> CGPoint {
+        return CGPoint(x: max(min(x, size.width), 0), y: max(min(y, size.height), 0))
+    }
+}
+
 public class SECropView: UIView {
     static let goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     static let badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
@@ -28,11 +34,13 @@ public class SECropView: UIView {
     override init(frame: CGRect) {
         super.init(frame: frame)
         backgroundColor = UIColor.clear
+        clipsToBounds = true
     }
     
     required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
 		backgroundColor = UIColor.clear
+        clipsToBounds = true
     }
     
     public func configureWithCorners(corners : Array<CGPoint>) {
@@ -46,13 +54,15 @@ public class SECropView: UIView {
         }
         
         for point in corners {
-            let cornerToAdd = SECornerView(frame: CGRect(x: point.x - SECornerView.cornerSize / 2.0,
-                                                         y: point.y - SECornerView.cornerSize / 2.0,
+            let pointToAdd = point.normalized(size: bounds.size)
+            let cornerToAdd = SECornerView(frame: CGRect(x: pointToAdd.x - SECornerView.cornerSize / 2.0,
+                                                         y: pointToAdd.y - SECornerView.cornerSize / 2.0,
                                                          width: SECornerView.cornerSize,
                                                          height: SECornerView.cornerSize))
             addSubview(cornerToAdd)
             self.corners.append(cornerToAdd)
         }
+        areaQuadrangle.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         areaQuadrangle.frame = bounds
         areaQuadrangle.backgroundColor = .clear
         areaQuadrangle.path = getPath()
@@ -61,6 +71,11 @@ public class SECropView: UIView {
         for corner in self.corners {
             corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
         }
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        areaQuadrangle.frame = bounds
     }
     
     fileprivate func update(scale : Int) {
@@ -118,9 +133,12 @@ public class SECropView: UIView {
         let from = touches.first!.previousLocation(in: self)
         let to = touches.first!.location(in: self)
         
+        
         let derivative = CGPoint(x: to.x - from.x, y: to.y - from.y)
         
-        corners[cornerOnTouch].center = CGPoint(x: corners[cornerOnTouch].center.x + derivative.x, y: corners[cornerOnTouch].center.y + derivative.y)
+        let newCenter = CGPoint(x: corners[cornerOnTouch].center.x + derivative.x, y: corners[cornerOnTouch].center.y + derivative.y)
+        
+        corners[cornerOnTouch].center = newCenter.normalized(size: bounds.size)
         
         update(scale: 0)
     }
