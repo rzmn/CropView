@@ -66,7 +66,7 @@ public class SECropView: UIView {
         areaQuadrangle.frame = bounds
         areaQuadrangle.backgroundColor = .clear
         areaQuadrangle.path = getPath()
-        areaQuadrangle.isPathValid = checkConvex()
+        areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: self.corners.map{ $0.center })
         addSubview(areaQuadrangle)
         for corner in self.corners {
             corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
@@ -93,7 +93,7 @@ public class SECropView: UIView {
         }
         corners[cornerOnTouch].setNeedsDisplay()
         areaQuadrangle.path = getPath()
-        areaQuadrangle.isPathValid = checkConvex()
+        areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: self.corners.map{ $0.center })
         areaQuadrangle.setNeedsDisplay()
         for corner in corners {
             corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
@@ -172,25 +172,5 @@ public class SECropView: UIView {
         
         return path
     }
-    
-    fileprivate func checkConvex() -> Bool {
-        guard corners.count > 2 else {
-            return false
-        }
-        var positiveCount = 0
-        var negativeCount = 0
-        for i in 0 ..< corners.count {
-            let p0 = corners[i].center
-            let p1 = corners[(i + 1) % corners.count].center
-            let p2 = corners[(i + 2) % corners.count].center
-            
-            let cross = (p1.x - p0.x) * (p2.y - p1.y) - (p1.y - p0.y) * (p2.x - p1.x);
-            if cross > 0 {
-                positiveCount += 1
-            } else if cross < 0 {
-                negativeCount += 1
-            }
-        }
-        return positiveCount == corners.count || negativeCount == corners.count
-    }
+
 }
