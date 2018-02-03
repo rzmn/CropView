@@ -10,7 +10,7 @@ import UIKit
 
 class SECornerView: UIView {
 
-    static let cornerSize : CGFloat = 25.0
+    static var cornerSize : CGFloat = 25.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
