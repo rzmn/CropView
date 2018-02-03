@@ -7,7 +7,7 @@
 
 import UIKit
 
-enum SECropError: Error {
+public enum SECropError: Error {
     case missingSuperview
     case missingImageOnImageView
     case invalidNumberOfCorners
