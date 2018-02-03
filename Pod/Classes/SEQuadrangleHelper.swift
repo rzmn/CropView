@@ -45,7 +45,7 @@ public class SEQuadrangleHelper {
         return orderedQuad.shifted(by: orderedQuad.count - topLeftIdx)
     }
     
-    static public func cropImage(with image: UIImage, quad: [CGPoint], outAspect: CGSize) throws -> UIImage {
+    static public func cropImage(with image: UIImage, quad: [CGPoint]) throws -> UIImage {
         
         let ciImage = CIImage(image: image)
         
