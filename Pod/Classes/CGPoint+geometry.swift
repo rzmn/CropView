@@ -14,4 +14,7 @@ extension CGPoint {
     static func cross(a: CGPoint, b: CGPoint) -> CGFloat {
         return a.x * b.y - a.y * b.x
     }
+    func normalized(size: CGSize) -> CGPoint {
+        return CGPoint(x: max(min(x, size.width), 0), y: max(min(y, size.height), 0))
+    }
 }
