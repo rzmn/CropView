@@ -37,11 +37,13 @@ class SECornerView: UIView {
         context.translateBy(x: -touchPoint.x,
                             y: -touchPoint.y)
 
+        /* TODO: faster rendering
         isHidden = true
         (superview as! SECropView).areaQuadrangle.isHidden = true
         self.superview?.superview?.superview?.layer.render(in: context)
         (superview as! SECropView).areaQuadrangle.isHidden = false
         isHidden = false
+         */
     }
     
     func scaleUp() {
