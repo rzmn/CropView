@@ -33,9 +33,8 @@
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jZ-N6-wqg">
-                                <rect key="frame" x="90" y="362" width="195" height="30"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jZ-N6-wqg">
+                                <rect key="frame" x="112" y="350.5" width="151" height="30"/>
                                 <state key="normal" title="Show With Autolayout"/>
                                 <connections>
                                     <segue destination="JxM-qm-2SV" kind="show" id="VKq-iU-uEg"/>
@@ -43,6 +42,10 @@
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerX" secondItem="uok-Le-0cH" secondAttribute="centerX" id="cmR-zf-9Cv"/>
+                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerY" secondItem="uok-Le-0cH" secondAttribute="centerY" id="lot-EB-zpk"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="uok-Le-0cH"/>
                     </view>
                     <navigationItem key="navigationItem" id="IVo-tY-gs3"/>
@@ -62,21 +65,13 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="paper.jpg" translatesAutoresizingMaskIntoConstraints="NO" id="bgg-M2-Fwk">
                                 <rect key="frame" x="0.0" y="64" width="375" height="603"/>
                             </imageView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="hy5-rp-EwP" customClass="SECropView" customModule="CropView">
-                                <rect key="frame" x="0.0" y="64" width="375" height="603"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="Tmu-Od-h0M" firstAttribute="bottom" secondItem="hy5-rp-EwP" secondAttribute="bottom" id="0z2-v6-YNE"/>
                             <constraint firstItem="bgg-M2-Fwk" firstAttribute="top" secondItem="Tmu-Od-h0M" secondAttribute="top" id="FjH-px-fKE"/>
                             <constraint firstItem="Tmu-Od-h0M" firstAttribute="trailing" secondItem="bgg-M2-Fwk" secondAttribute="trailing" id="Mdh-dQ-ywQ"/>
-                            <constraint firstItem="hy5-rp-EwP" firstAttribute="leading" secondItem="Tmu-Od-h0M" secondAttribute="leading" id="O1l-DR-Yni"/>
                             <constraint firstItem="bgg-M2-Fwk" firstAttribute="leading" secondItem="Tmu-Od-h0M" secondAttribute="leading" id="VDO-H8-Tom"/>
-                            <constraint firstItem="Tmu-Od-h0M" firstAttribute="trailing" secondItem="hy5-rp-EwP" secondAttribute="trailing" id="lhi-6p-J63"/>
                             <constraint firstItem="Tmu-Od-h0M" firstAttribute="bottom" secondItem="bgg-M2-Fwk" secondAttribute="bottom" id="naN-Sf-xmP"/>
-                            <constraint firstItem="hy5-rp-EwP" firstAttribute="top" secondItem="Tmu-Od-h0M" secondAttribute="top" id="nas-pN-KjH"/>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="Tmu-Od-h0M"/>
                     </view>
@@ -88,7 +83,6 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
-                        <outlet property="cropView" destination="hy5-rp-EwP" id="n6K-Tn-5mc"/>
                         <outlet property="imageView" destination="bgg-M2-Fwk" id="E7f-Ht-3dq"/>
                         <segue destination="yKa-ze-6nz" kind="show" identifier="doCrop" id="60w-Tv-Txg"/>
                     </connections>
