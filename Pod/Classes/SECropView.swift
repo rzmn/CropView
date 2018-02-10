@@ -7,14 +7,11 @@
 //
 
 import UIKit
-
-extension CGPoint {
-    func normalized(size: CGSize) -> CGPoint {
-        return CGPoint(x: max(min(x, size.width), 0), y: max(min(y, size.height), 0))
-    }
-}
+import AVFoundation
 
 public class SECropView: UIView {
+    
+    // MARK: properties
     static var goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     static var badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
 
@@ -22,84 +19,171 @@ public class SECropView: UIView {
     
     fileprivate var corners = Array<SECornerView>()
     fileprivate var cornerOnTouch = -1
+    fileprivate var imageView : UIImageView?
 
 	var isPathvalid: Bool {
 		return areaQuadrangle.isPathValid
 	}
 
-	public var cornerLocations: [CGPoint] {
-		return corners.flatMap { $0.center }
-	}
+    public var cornerLocations : [CGPoint]?
+    
+    var path : CGMutablePath {
+        let path = CGMutablePath()
+        guard let firstPt = corners.first else { return CGMutablePath() }
+        
+        let initPt = CGPoint(x: firstPt.center.x - areaQuadrangle.frame.origin.x,
+                             y: firstPt.center.y - areaQuadrangle.frame.origin.y)
+        path.move(to: initPt)
+        for i in 0 ..< corners.count - 1 {
+            let pt = CGPoint(x: corners[(i + 1) % corners.count].center.x - areaQuadrangle.frame.origin.x,
+                             y: corners[(i + 1) % corners.count].center.y - areaQuadrangle.frame.origin.y)
+            path.addLine(to: pt)
+            
+        }
+        path.closeSubpath()
+        return path
+    }
+    
+    var cornersScale : CGPoint? {
+        guard let imageView = imageView else { return nil }
+        guard let image = imageView.image else { return nil }
+        
+        let imageSizeAspectFit = AVMakeRect(aspectRatio: image.size, insideRect: imageView.bounds).size
+        
+        return CGPoint(x: imageSizeAspectFit.width / (image.size.width * image.scale),
+                       y: imageSizeAspectFit.height / (image.size.height * image.scale))
+    }
+    
+    var cornersLocationOnView : [CGPoint]? {
+        guard let imageSize = imageView?.image?.size else { return nil }
+        guard let scale = cornersScale else { return nil }
+        guard let imageViewFrame = imageView?.bounds else { return nil }
+        guard let imageViewOrigin = imageView?.globalPoint else { return nil }
+        guard let cropViewOrigin = self.globalPoint else { return nil }
+        guard let cornersOnImage = cornerLocations else { return nil }
+        
+        let imageOrigin = AVMakeRect(aspectRatio: imageSize, insideRect: imageViewFrame).origin
+        let shift = CGPoint(x: -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECornerView.cornerSize / 2.0,
+                            y: -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECornerView.cornerSize / 2.0)
+        
+        return cornersOnImage.map {
+            CGPoint(x: $0.x * scale.x + shift.x, y: $0.y * scale.y + shift.y)
+        }
+    }
+    
+    // MARK: initialization
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        backgroundColor = UIColor.clear
-        clipsToBounds = true
+        internalInit()
     }
     
     required public init?(coder aDecoder: NSCoder) {
 		super.init(coder: aDecoder)
-		backgroundColor = UIColor.clear
-        clipsToBounds = true
+        internalInit()
     }
     
-    public func configureWithCorners(corners : Array<CGPoint>) {
+    fileprivate func internalInit() {
+        backgroundColor = UIColor.clear
+        clipsToBounds = true
+        autoresizingMask = [.flexibleWidth, .flexibleHeight]
+    }
+    
+    // MARK: layout
+    
+    fileprivate func pairPositionsAndViews() {
+        DispatchQueue.main.async {
+            
+            if let cornerPositions = self.cornersLocationOnView {
+                for i in 0 ..< self.corners.count {
+                    self.corners[i].center = CGPoint(x: cornerPositions[i].x - SECornerView.cornerSize / 2.0,
+                                                y: cornerPositions[i].y - SECornerView.cornerSize / 2.0)
+                    self.corners[i].setNeedsDisplay()
+                }
+            }
+            self.areaQuadrangle.setNeedsDisplay()
+        }
+    }
+    
+    public override func layoutMarginsDidChange() {
+        super.layoutMarginsDidChange()
+        layoutSubviews()
+    }
+    
+    public override func layoutSubviews() {
+        super.layoutSubviews()
+        print(#function)
+        if let imgsize = imageView?.image?.size, let imageBounds = imageView?.bounds {
+            let imageOrigin = AVMakeRect(aspectRatio: imgsize, insideRect: imageBounds)
+            frame = imageOrigin
+            areaQuadrangle.frame = AVMakeRect(aspectRatio: imgsize, insideRect: bounds)
+        }
+        self.pairPositionsAndViews()
+        self.update(scale: 0)
+        setNeedsDisplay()
+    }
+    
+    public func configureWithCorners(corners : Array<CGPoint>, on imageView: UIImageView) {
+        self.cornerLocations = corners
+        self.imageView = imageView
+        self.imageView?.isUserInteractionEnabled = true
+        imageView.addSubview(self)
         
-        
-        self.corners = []
         for subview in subviews {
             if subview is SECornerView {
                 subview.removeFromSuperview()
             }
         }
         
-        for point in corners {
-            let pointToAdd = point.normalized(size: bounds.size)
-            let cornerToAdd = SECornerView(frame: CGRect(x: pointToAdd.x - SECornerView.cornerSize / 2.0,
-                                                         y: pointToAdd.y - SECornerView.cornerSize / 2.0,
-                                                         width: SECornerView.cornerSize,
-                                                         height: SECornerView.cornerSize))
-            addSubview(cornerToAdd)
-            self.corners.append(cornerToAdd)
+        for _ in 0 ..< 4 {
+            let corner = SECornerView(frame: CGRect(x: 0, y: 0, width: SECornerView.cornerSize, height: SECornerView.cornerSize))
+            addSubview(corner)
+            self.corners.append(corner)
         }
+        
         areaQuadrangle.autoresizingMask = [.flexibleWidth, .flexibleHeight]
         areaQuadrangle.frame = bounds
         areaQuadrangle.backgroundColor = .clear
-        areaQuadrangle.path = getPath()
-        areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: self.corners.map{ $0.center })
+        areaQuadrangle.cropView = self
+        
+        areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: corners)
         addSubview(areaQuadrangle)
         for corner in self.corners {
             corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
+            corner.scaleDown()
         }
+        areaQuadrangle.setNeedsDisplay()
+        layoutSubviews()
     }
     
-    public override func layoutSubviews() {
-        super.layoutSubviews()
-        areaQuadrangle.frame = bounds
+    public func setCorners(newCorners: [CGPoint]) {
+        for i in 0 ..< corners.count {
+            corners[i].center = newCorners[i]
+        }
+        setNeedsDisplay()
     }
     
     fileprivate func update(scale : Int) {
-        guard cornerOnTouch != -1 else { return }
-        
+        guard self.cornerOnTouch != -1 else { return }
         switch scale {
         case +1:
-            corners[cornerOnTouch].scaleUp()
-            bringSubview(toFront: corners[cornerOnTouch])
-            bringSubview(toFront: areaQuadrangle)
+            self.corners[self.cornerOnTouch].scaleUp()
+            self.bringSubview(toFront: self.corners[self.cornerOnTouch])
+            self.bringSubview(toFront: self.areaQuadrangle)
         case -1:
-            corners[cornerOnTouch].scaleDown()
+            self.corners[self.cornerOnTouch].scaleDown()
         default: break
-            
         }
-        corners[cornerOnTouch].setNeedsDisplay()
-        areaQuadrangle.path = getPath()
-        areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: self.corners.map{ $0.center })
-        areaQuadrangle.setNeedsDisplay()
-        for corner in corners {
-            corner.layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
+        
+        self.corners[self.cornerOnTouch].setNeedsDisplay()
+        self.areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: self.corners.map{ $0.center })
+        for corner in self.corners {
+            corner.layer.borderColor = (self.areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor).cgColor
         }
     }
 
+    // MARK: touches handling
+    
     override public func touchesBegan(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesBegan(touches, with: event)
         
@@ -125,7 +209,6 @@ public class SECropView: UIView {
     
     override public func touchesMoved(_ touches: Set<UITouch>, with event: UIEvent?) {
         super.touchesMoved(touches, with: event)
-        
         guard cornerOnTouch != -1 && touches.count == 1 else {
             return
         }
@@ -133,14 +216,21 @@ public class SECropView: UIView {
         let from = touches.first!.previousLocation(in: self)
         let to = touches.first!.location(in: self)
         
-        
         let derivative = CGPoint(x: to.x - from.x, y: to.y - from.y)
         
-        let newCenter = CGPoint(x: corners[cornerOnTouch].center.x + derivative.x, y: corners[cornerOnTouch].center.y + derivative.y)
-        
-        corners[cornerOnTouch].center = newCenter.normalized(size: bounds.size)
-        
         update(scale: 0)
+
+        guard let scale = cornersScale else { return }
+        guard let cornerLocations = cornerLocations else { return }
+        guard let img = imageView?.image else { return }
+        let newCenterOnImage = CGPoint(x: cornerLocations[cornerOnTouch].x + derivative.x / scale.x,
+                                       y: cornerLocations[cornerOnTouch].y + derivative.y / scale.y).normalized(size: CGSize(width: img.size.width * img.scale,
+                                                                                                                             height: img.size.height * img.scale))
+        self.cornerLocations?[cornerOnTouch] = newCenterOnImage
+        print(newCenterOnImage)
+        
+        pairPositionsAndViews()
+        areaQuadrangle.setNeedsDisplay()
     }
     
     override public func touchesEnded(_ touches: Set<UITouch>, with event: UIEvent?) {
@@ -152,25 +242,4 @@ public class SECropView: UIView {
         update(scale: -1)
         cornerOnTouch = -1
     }
-    
-    fileprivate func getPath() -> CGMutablePath {
-        let path = CGMutablePath()
-        
-        guard let firstPt = corners.first else { return CGMutablePath() }
-        
-        let initPt = CGPoint(x: firstPt.center.x - areaQuadrangle.frame.origin.x,
-                             y: firstPt.center.y - areaQuadrangle.frame.origin.y)
-        path.move(to: initPt)
-        
-        for i in 0 ..< corners.count - 1 {
-            let pt = CGPoint(x: corners[(i + 1) % corners.count].center.x - areaQuadrangle.frame.origin.x,
-                             y: corners[(i + 1) % corners.count].center.y - areaQuadrangle.frame.origin.y)
-            path.addLine(to: pt)
-            
-        }
-        path.closeSubpath()
-        
-        return path
-    }
-
 }
