@@ -10,11 +10,31 @@ import UIKit
 
 class SEAreaView: UIView {
 
-    var path = CGMutablePath()
+    var cropView : SECropView?
     var isPathValid = true
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        contentMode = .redraw
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        CATransaction.commit()
+    }
+    
+    required init?(coder aDecoder: NSCoder) {
+        super.init(coder: aDecoder)
+        contentMode = .redraw
+        
+        CATransaction.begin()
+        CATransaction.setDisableActions(true)
+        CATransaction.commit()
+    }
     
     override func draw(_ rect: CGRect) {
         super.draw(rect)
+        
+        guard let path = cropView?.path else { return }
         
         let context = UIGraphicsGetCurrentContext()
         context?.setAllowsAntialiasing(true)
@@ -38,5 +58,4 @@ class SEAreaView: UIView {
         
         context?.restoreGState()
     }
-
 }
