@@ -158,8 +158,9 @@ public class SECropView: UIView {
     
     public func setCorners(newCorners: [CGPoint]) {
         for i in 0 ..< corners.count {
-            corners[i].center = newCorners[i]
+            cornerLocations?[i] = newCorners[i]
         }
+        pairPositionsAndViews()
         setNeedsDisplay()
     }
     
