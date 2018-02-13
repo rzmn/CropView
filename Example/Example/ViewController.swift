@@ -17,7 +17,7 @@ class ViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        // points are defined in the coordinate system of the image
         cropView.configureWithCorners(corners: [CGPoint(x: 100, y: 120),
                                                 CGPoint(x: 270, y: 170),
                                                 CGPoint(x: 280, y: 450),
