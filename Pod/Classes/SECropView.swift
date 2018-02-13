@@ -25,7 +25,7 @@ public class SECropView: UIView {
 		return areaQuadrangle.isPathValid
 	}
 
-    public var cornerLocations : [CGPoint]?
+    public private(set) var cornerLocations : [CGPoint]?
     
     var path : CGMutablePath {
         let path = CGMutablePath()
