@@ -24,6 +24,17 @@ class ViewController: UIViewController {
                                                 CGPoint(x: 120, y: 400)], on: imageView)
     }
     
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        /**
+         if you want to re-set cropView coordinates
+         cropView.setCorners(newCorners: [CGPoint(x: 0, y: 120),
+         CGPoint(x: 70, y: 1170),
+         CGPoint(x: 80, y: 450),
+         CGPoint(x: 20, y: 400)])
+         */
+    }
+    
     @IBAction func saveImg(_ sender: Any) {
         do {
             guard let corners = cropView.cornerLocations else { return }
