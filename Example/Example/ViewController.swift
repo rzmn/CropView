@@ -18,7 +18,7 @@ class ViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // points are defined in the coordinate system of the image
-        cropView.configureWithCorners(corners: [CGPoint(x: 100, y: 120),
+        cropView.configureWithCorners(corners: [CGPoint(x: 120, y: 100),
                                                 CGPoint(x: 270, y: 170),
                                                 CGPoint(x: 280, y: 450),
                                                 CGPoint(x: 120, y: 400)], on: imageView)
@@ -26,12 +26,12 @@ class ViewController: UIViewController {
     
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        /**
+        /*
          if you want to re-set cropView coordinates
-         cropView.setCorners(newCorners: [CGPoint(x: 0, y: 120),
-         CGPoint(x: 70, y: 1170),
-         CGPoint(x: 80, y: 450),
-         CGPoint(x: 20, y: 400)])
+         cropView.setCorners(newCorners: [CGPoint(x: 240, y: 200),
+         CGPoint(x: 540, y: 340),
+         CGPoint(x: 560, y: 900),
+         CGPoint(x: 240, y: 800)])
          */
     }
     
