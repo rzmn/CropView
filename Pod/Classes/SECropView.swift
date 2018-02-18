@@ -157,7 +157,7 @@ public class SECropView: UIView {
     }
     
     public func setCorners(newCorners: [CGPoint]) {
-		areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: corners)
+		areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: newCorners)
         for i in 0 ..< corners.count {
             cornerLocations?[i] = newCorners[i]
 			corners[i].layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
