@@ -1,11 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="KXe-i0-3J5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="13771" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="KXe-i0-3J5">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="13772"/>
-        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="Alignment constraints with different attributes" minToolsVersion="5.1"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -29,12 +30,16 @@
         <scene sceneID="5ej-6n-VLI">
             <objects>
                 <viewController id="4d0-dA-3x9" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="dCw-VG-3ZO"/>
+                        <viewControllerLayoutGuide type="bottom" id="EsS-jm-zx0"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="plO-80-jbt">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="9jZ-N6-wqg">
-                                <rect key="frame" x="112" y="350.5" width="151" height="30"/>
+                                <rect key="frame" x="112" y="318.5" width="151" height="30"/>
                                 <state key="normal" title="Show With Autolayout"/>
                                 <connections>
                                     <segue destination="JxM-qm-2SV" kind="show" id="VKq-iU-uEg"/>
@@ -43,10 +48,9 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerX" secondItem="uok-Le-0cH" secondAttribute="centerX" id="cmR-zf-9Cv"/>
-                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerY" secondItem="uok-Le-0cH" secondAttribute="centerY" id="lot-EB-zpk"/>
+                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerX" secondItem="plO-80-jbt" secondAttribute="centerX" id="cmR-zf-9Cv"/>
+                            <constraint firstItem="9jZ-N6-wqg" firstAttribute="centerY" secondItem="plO-80-jbt" secondAttribute="centerY" id="lot-EB-zpk"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="uok-Le-0cH"/>
                     </view>
                     <navigationItem key="navigationItem" id="IVo-tY-gs3"/>
                 </viewController>
@@ -58,6 +62,10 @@
         <scene sceneID="R7Y-lc-Mch">
             <objects>
                 <viewController id="JxM-qm-2SV" customClass="ViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="knf-AK-FhL"/>
+                        <viewControllerLayoutGuide type="bottom" id="5jL-gX-YGq"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="W2z-it-KMO">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -68,12 +76,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="bgg-M2-Fwk" firstAttribute="top" secondItem="Tmu-Od-h0M" secondAttribute="top" id="FjH-px-fKE"/>
-                            <constraint firstItem="Tmu-Od-h0M" firstAttribute="trailing" secondItem="bgg-M2-Fwk" secondAttribute="trailing" id="Mdh-dQ-ywQ"/>
-                            <constraint firstItem="bgg-M2-Fwk" firstAttribute="leading" secondItem="Tmu-Od-h0M" secondAttribute="leading" id="VDO-H8-Tom"/>
-                            <constraint firstItem="Tmu-Od-h0M" firstAttribute="bottom" secondItem="bgg-M2-Fwk" secondAttribute="bottom" id="naN-Sf-xmP"/>
+                            <constraint firstItem="bgg-M2-Fwk" firstAttribute="top" secondItem="knf-AK-FhL" secondAttribute="bottom" id="FjH-px-fKE"/>
+                            <constraint firstAttribute="trailing" secondItem="bgg-M2-Fwk" secondAttribute="trailing" id="Mdh-dQ-ywQ"/>
+                            <constraint firstItem="bgg-M2-Fwk" firstAttribute="leading" secondItem="W2z-it-KMO" secondAttribute="leading" id="VDO-H8-Tom"/>
+                            <constraint firstItem="5jL-gX-YGq" firstAttribute="top" secondItem="bgg-M2-Fwk" secondAttribute="bottom" id="naN-Sf-xmP"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="Tmu-Od-h0M"/>
                     </view>
                     <navigationItem key="navigationItem" title="Crop Me" id="wjW-zc-gdL">
                         <barButtonItem key="rightBarButtonItem" title="Crop" id="WWS-xY-pk7">
@@ -95,6 +102,10 @@
         <scene sceneID="Qlu-KX-1e0">
             <objects>
                 <viewController title="Result" id="yKa-ze-6nz" customClass="ImageViewController" customModule="Example" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="DMD-Ft-eok"/>
+                        <viewControllerLayoutGuide type="bottom" id="HAF-50-GaV"/>
+                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="V9I-GN-k5c">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -112,12 +123,11 @@
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                         <constraints>
-                            <constraint firstItem="k6F-hU-ptU" firstAttribute="trailing" secondItem="tgj-nc-maJ" secondAttribute="trailing" id="R3H-4z-BNO"/>
-                            <constraint firstItem="tgj-nc-maJ" firstAttribute="top" secondItem="k6F-hU-ptU" secondAttribute="top" id="fZH-57-YDG"/>
-                            <constraint firstItem="tgj-nc-maJ" firstAttribute="leading" secondItem="k6F-hU-ptU" secondAttribute="leading" id="hv7-d1-Jy4"/>
-                            <constraint firstItem="k6F-hU-ptU" firstAttribute="bottom" secondItem="tgj-nc-maJ" secondAttribute="bottom" id="yC9-D9-sso"/>
+                            <constraint firstAttribute="trailing" secondItem="tgj-nc-maJ" secondAttribute="trailing" id="R3H-4z-BNO"/>
+                            <constraint firstItem="tgj-nc-maJ" firstAttribute="top" secondItem="DMD-Ft-eok" secondAttribute="bottom" id="fZH-57-YDG"/>
+                            <constraint firstItem="tgj-nc-maJ" firstAttribute="leading" secondItem="V9I-GN-k5c" secondAttribute="leading" id="hv7-d1-Jy4"/>
+                            <constraint firstItem="HAF-50-GaV" firstAttribute="top" secondItem="tgj-nc-maJ" secondAttribute="bottom" id="yC9-D9-sso"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="k6F-hU-ptU"/>
                     </view>
                     <connections>
                         <outlet property="imageView" destination="tgj-nc-maJ" id="UaI-cb-w2R"/>
