@@ -12,8 +12,8 @@ import AVFoundation
 public class SECropView: UIView {
     
     // MARK: properties
-    static var goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
-    static var badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    public static var goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
+    public static var badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
 
     var areaQuadrangle = SEAreaView()
     
@@ -157,8 +157,10 @@ public class SECropView: UIView {
     }
     
     public func setCorners(newCorners: [CGPoint]) {
+		areaQuadrangle.isPathValid = SEQuadrangleHelper.checkConvex(corners: newCorners)
         for i in 0 ..< corners.count {
             cornerLocations?[i] = newCorners[i]
+			corners[i].layer.borderColor = (areaQuadrangle.isPathValid ? SECropView.goodAreaColor : SECropView.badAreaColor ).cgColor
         }
         pairPositionsAndViews()
         setNeedsDisplay()

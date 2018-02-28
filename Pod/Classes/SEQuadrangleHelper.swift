@@ -54,7 +54,7 @@ public class SEQuadrangleHelper {
                              height: image.size.height * image.scale)
         
         let orderedQuad = try orderPointsInQuadrangle(quad: quad)
-        
+        let context = CIContext(options: nil)
         print("ordered quad: ", orderedQuad)
         
         guard let transform = perspectiveCorrection else { throw SECropError.unknown }
@@ -68,9 +68,9 @@ public class SEQuadrangleHelper {
                            forKey: "inputBottomLeft")
         transform.setValue(ciImage, forKey: kCIInputImageKey)
         
-        guard let perspectiveCorrectedImg = transform.outputImage else { throw SECropError.unknown }
+        guard let perspectiveCorrectedImg = transform.outputImage, let cgImage = context.createCGImage(perspectiveCorrectedImg, from: perspectiveCorrectedImg.extent) else { throw SECropError.unknown }
         
-        return UIImage(ciImage: perspectiveCorrectedImg)
+        return UIImage(cgImage: cgImage)
     }
 
     static internal func checkConvex(corners: [CGPoint]) -> Bool {
