@@ -56,7 +56,7 @@ public class SECropView: UIView {
                        y: imageSizeAspectFit.height / (image.size.height * image.scale))
     }
     
-    var cornersLocationOnView : [CGPoint]? {
+    public var cornersLocationOnView : [CGPoint]? {
         guard let imageSize = imageView?.image?.size else { return nil }
         guard let scale = cornersScale else { return nil }
         guard let imageViewFrame = imageView?.bounds else { return nil }
