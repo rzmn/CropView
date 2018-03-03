@@ -9,15 +9,11 @@ Quadrangle view and image cropper like a Notes App
 # Usage
 ### Initialization
 Set initial coordinates in points
-Also autolayout is supported too, see sample for details
 ``` swift
-let cropView = SECropView()
-cropView.frame = view.frame
-cropView.configureWithCorners(corners: [CGPoint(x: 100, y: 120),
-CGPoint(x: 270, y: 170),
-CGPoint(x: 280, y: 450),
-CGPoint(x: 120, y: 400)])
-view.addSubview(cropView)
+cropView.configureWithCorners(corners: [CGPoint(x: 120, y: 100),
+                                        CGPoint(x: 270, y: 170),
+                                        CGPoint(x: 280, y: 450),
+                                        CGPoint(x: 120, y: 400)], on: imageView)
 ```
 ### Customisation
 Customize color of your corners/contour and corners size
