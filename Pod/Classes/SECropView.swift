@@ -14,6 +14,8 @@ public class SECropView: UIView {
     // MARK: properties
     public static var goodAreaColor = #colorLiteral(red: 0.4666666687, green: 0.7647058964, blue: 0.2666666806, alpha: 1)
     public static var badAreaColor  = #colorLiteral(red: 0.9254902005, green: 0.2352941185, blue: 0.1019607857, alpha: 1)
+    
+    public static var cornerSize : CGFloat = 25.0
 
     var areaQuadrangle = SEAreaView()
     
@@ -63,8 +65,8 @@ public class SECropView: UIView {
         guard let cornersOnImage = cornerLocations else { return nil }
         
         let imageOrigin = AVMakeRect(aspectRatio: imageSize, insideRect: imageViewFrame).origin
-        let shift = CGPoint(x: -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECornerView.cornerSize / 2.0,
-                            y: -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECornerView.cornerSize / 2.0)
+        let shift = CGPoint(x: -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECropView.cornerSize / 2.0,
+                            y: -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECropView.cornerSize / 2.0)
         
         return cornersOnImage.map {
             CGPoint(x: $0.x * scale.x + shift.x, y: $0.y * scale.y + shift.y)
@@ -96,8 +98,8 @@ public class SECropView: UIView {
             
             if let cornerPositions = self.cornersLocationOnView {
                 for i in 0 ..< self.corners.count {
-                    self.corners[i].center = CGPoint(x: cornerPositions[i].x - SECornerView.cornerSize / 2.0,
-                                                y: cornerPositions[i].y - SECornerView.cornerSize / 2.0)
+                    self.corners[i].center = CGPoint(x: cornerPositions[i].x - SECropView.cornerSize / 2.0,
+                                                y: cornerPositions[i].y - SECropView.cornerSize / 2.0)
                     self.corners[i].setNeedsDisplay()
                 }
             }
@@ -136,7 +138,7 @@ public class SECropView: UIView {
         }
         
         for _ in 0 ..< 4 {
-            let corner = SECornerView(frame: CGRect(x: 0, y: 0, width: SECornerView.cornerSize, height: SECornerView.cornerSize))
+            let corner = SECornerView(frame: CGRect(x: 0, y: 0, width: SECropView.cornerSize, height: SECropView.cornerSize))
             addSubview(corner)
             self.corners.append(corner)
         }

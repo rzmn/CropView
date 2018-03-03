@@ -9,8 +9,6 @@
 import UIKit
 
 class SECornerView: UIView {
-
-    static var cornerSize : CGFloat = 25.0
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -31,8 +29,8 @@ class SECornerView: UIView {
 
         let context = UIGraphicsGetCurrentContext()!
         
-        context.translateBy(x: -(position.size.width / 2 - SECornerView.cornerSize / 2),
-                            y: -(position.size.width / 2 - SECornerView.cornerSize / 2))
+        context.translateBy(x: -(position.size.width / 2 - SECropView.cornerSize / 2),
+                            y: -(position.size.width / 2 - SECropView.cornerSize / 2))
 
         context.translateBy(x: -touchPoint.x,
                             y: -touchPoint.y)
