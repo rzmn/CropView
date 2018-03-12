@@ -4,7 +4,7 @@ Quadrangle view and image cropper like a Notes App
 
 
 # Demo
-
+![Screenshot](https://github.com/rzmn/CropView/blob/master/sample.gif)
 
 # Usage
 ### Initialization
