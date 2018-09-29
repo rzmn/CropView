@@ -173,8 +173,8 @@ public class SECropView: UIView {
         switch scale {
         case +1:
             self.corners[self.cornerOnTouch].scaleUp()
-            self.bringSubview(toFront: self.corners[self.cornerOnTouch])
-            self.bringSubview(toFront: self.areaQuadrangle)
+            self.bringSubviewToFront(self.corners[self.cornerOnTouch])
+            self.bringSubviewToFront(self.areaQuadrangle)
         case -1:
             self.corners[self.cornerOnTouch].scaleDown()
         default: break
