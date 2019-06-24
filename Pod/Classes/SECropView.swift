@@ -65,8 +65,9 @@ public class SECropView: UIView {
         guard let cornersOnImage = cornerLocations else { return nil }
         
         let imageOrigin = AVMakeRect(aspectRatio: imageSize, insideRect: imageViewFrame).origin
-        let shift = CGPoint(x: -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECropView.cornerSize / 2.0,
-                            y: -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECropView.cornerSize / 2.0)
+        let shiftX = -cropViewOrigin.x + imageViewOrigin.x + imageOrigin.x + SECropView.cornerSize / 2.0
+	let shiftY = -cropViewOrigin.y + imageViewOrigin.y + imageOrigin.y + SECropView.cornerSize / 2.0
+        let shift = CGPoint(x: shiftX, y: shiftY)
         
         return cornersOnImage.map {
             CGPoint(x: $0.x * scale.x + shift.x, y: $0.y * scale.y + shift.y)
